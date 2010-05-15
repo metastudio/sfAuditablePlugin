@@ -1,0 +1,13 @@
+sfAuditableLogItem:
+  options:
+    collate: utf8_unicode_ci
+    charset: utf8
+  actAs: [Timestampable]
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    issuer_id: { type: integer(4) }
+    text: { type: string }
+    object_id: { type: integer(4) }
+    object_class: { type: string }
+  relations:
+    Issuer: { class: sfGuardUser, local: issuer_id, foreign: id, foreignAlias: sfAuditableLogItems }
