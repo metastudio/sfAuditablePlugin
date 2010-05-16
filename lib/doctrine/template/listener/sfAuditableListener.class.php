@@ -35,11 +35,11 @@ class sfAuditableListener extends Doctrine_Record_Listener
 	protected function logEvent($object, $options)
 	{
 		// If there is no context, then the event is triggered by the CLI task maybe
-		if (!($context = sfContext::getInstance()))
+		if (!sfContext::hasInstance())
 		{
 			return;
 		}
-		
+		$context = sfContext::getInstance();
 		$user = $context->getUser();
 		$logItem = new sfAuditableLogItem();
 		$logItem->setIssuer($user->getGuardUser());
