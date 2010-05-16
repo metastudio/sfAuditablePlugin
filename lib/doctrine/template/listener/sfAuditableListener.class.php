@@ -49,6 +49,11 @@ class sfAuditableListener extends Doctrine_Record_Listener
 			$objectClass = get_class($object);
 			$logItem->setObjectId($objectId);
 			$logItem->setObjectClass($objectClass);
+			$name = "";
+			if (isset($this->_options["nameField"]))
+			{
+				$name = $object->get($this->_options["nameField"]);
+			}
 			$message = $options["message"];
 			sfContext::getInstance()->getConfiguration()->loadHelpers("Url");
 			if (isset($options["link"]))
@@ -60,8 +65,8 @@ class sfAuditableListener extends Doctrine_Record_Listener
 			}
 			$object = $this->_options["name"];
 			$message = str_replace(
-				array("%OBJECT_WITH_LINK%", "%OBJECT%"),
-				array($objectWithLink, $object),
+				array("%OBJECT_WITH_LINK%", "%OBJECT%", "%NAME%"),
+				array($objectWithLink, $object, $name),
 				$message
 			);
 			$logItem->setText($message);

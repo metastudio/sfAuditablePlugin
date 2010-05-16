@@ -12,7 +12,7 @@ class sfAuditable extends Doctrine_Template
 		),
 		"delete" => array(
 			"track"   => true,
-			"message" => "User deleted %OBJECT_WITH_LINK%.",
+			"message" => "User deleted %OBJECT% %NAME%.",
 		),
 	);
 	
