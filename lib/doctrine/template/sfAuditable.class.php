@@ -1,7 +1,7 @@
 <?php
 class sfAuditable extends Doctrine_Template 
 {
-  protected $_options = array(
+	  protected $_options = array(
 		"create" => array(
 			"track"   => true,
 			"message" => "User created %OBJECT_WITH_LINK%.",
@@ -15,7 +15,7 @@ class sfAuditable extends Doctrine_Template
 			"message" => "User deleted %OBJECT_WITH_LINK%.",
 		),
 	);
-
+	
   public function setTableDefinition()
   {
 		$this->addListener(new sfAuditableListener($this->_options));

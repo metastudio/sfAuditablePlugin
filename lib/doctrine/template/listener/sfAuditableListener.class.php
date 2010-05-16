@@ -45,8 +45,26 @@ class sfAuditableListener extends Doctrine_Record_Listener
 		$logItem->setIssuer($user->getGuardUser());
 		if ($object != null && is_callable(array($object, "getId")));
 		{
-			$logItem->setObjectId($object->getId());
-			$logItem->setObjectClass(get_class($object));
+			$objectId = $object->getId();
+			$objectClass = get_class($object);
+			$logItem->setObjectId($objectId);
+			$logItem->setObjectClass($objectClass);
+			$message = $options["message"];
+			sfContext::getInstance()->getConfiguration()->loadHelpers("Url");
+			if (isset($options["link"]))
+			{
+				$link = str_replace("%ID%", $objectId, $options["link"]);
+				$objectWithLink = '<a href="' . url_for($link) . '">' . $this->_options["name"] . '</a>';
+			} else {
+				$objectWithLink = $this->_options["name"];
+			}
+			$object = $this->_options["name"];
+			$message = str_replace(
+				array("%OBJECT_WITH_LINK%", "%OBJECT%"),
+				array($objectWithLink, $object),
+				$message
+			);
+			$logItem->setText($message);
 		}
 		$logItem->save();
 	}

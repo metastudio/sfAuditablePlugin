@@ -14,6 +14,6 @@ abstract class PluginsfAuditableLogItem extends BasesfAuditableLogItem
 {
 	public function formatMessage()
 	{
-		
+		return $this->getText();
 	}
 }
